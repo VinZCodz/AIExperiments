@@ -1,10 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: '.env.local', override: true });// Add your own .env.local
 
 const client = new GoogleGenAI({
-    apiKey: process.env.GOOGLE_API_KEY, // Add your own GOOGLE_API_KEY in .env variable
+    apiKey: process.env.GOOGLE_API_KEY, // Add your own GOOGLE_API_KEY
 });
 
 const response = await client.models.embedContent({
@@ -13,4 +13,3 @@ const response = await client.models.embedContent({
 });
 
 console.log(response.embeddings);
-
