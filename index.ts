@@ -1,14 +1,16 @@
-import * as http from "http";
+import { GoogleGenAI } from "@google/genai";
+import dotenv from "dotenv";
 
-const port = 3000;
-const hostname = "0.0.0.0";
+dotenv.config();
 
-const server = http.createServer((_req, res) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello, World!\n");
+const client = new GoogleGenAI({
+    apiKey: process.env.GOOGLE_API_KEY, // Add your own GOOGLE_API_KEY in .env variable
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+const response = await client.models.embedContent({
+    model: "gemini-embedding-001",
+    contents: "What is the meaning of life?",
 });
+
+console.log(response.embeddings);
+
